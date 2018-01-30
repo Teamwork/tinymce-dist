@@ -35,7 +35,7 @@ var autosave = (function () {
   var fireRemoveDraft = function (editor) {
     return editor.fire('RemoveDraft');
   };
-  var $_flb3g8bjd08mcae = {
+  var $_d88umc8bjd24rip6 = {
     fireRestoreDraft: fireRestoreDraft,
     fireStoreDraft: fireStoreDraft,
     fireRemoveDraft: fireRemoveDraft
@@ -49,7 +49,7 @@ var autosave = (function () {
     time = /^(\d+)([ms]?)$/.exec('' + (time || defaultTime));
     return (time[2] ? multiples[time[2]] : 1) * parseInt(time, 10);
   };
-  var $_4k6usi8djd08mcaj = { parse: parse };
+  var $_b4mo9u8djd24ripa = { parse: parse };
 
   var shouldAskBeforeUnload = function (editor) {
     return editor.getParam('autosave_ask_before_unload', true);
@@ -66,12 +66,12 @@ var autosave = (function () {
     return editor.getParam('autosave_restore_when_empty', false);
   };
   var getAutoSaveInterval = function (editor) {
-    return $_4k6usi8djd08mcaj.parse(editor.settings.autosave_interval, '30s');
+    return $_b4mo9u8djd24ripa.parse(editor.settings.autosave_interval, '30s');
   };
   var getAutoSaveRetention = function (editor) {
-    return $_4k6usi8djd08mcaj.parse(editor.settings.autosave_retention, '20m');
+    return $_b4mo9u8djd24ripa.parse(editor.settings.autosave_retention, '20m');
   };
-  var $_gc7s768cjd08mcag = {
+  var $_3xick18cjd24rip8 = {
     shouldAskBeforeUnload: shouldAskBeforeUnload,
     getAutoSavePrefix: getAutoSavePrefix,
     shouldRestoreWhenEmpty: shouldRestoreWhenEmpty,
@@ -85,41 +85,41 @@ var autosave = (function () {
     return html === '' || new RegExp('^<' + forcedRootBlockName + '[^>]*>((\xA0|&nbsp;|[ \t]|<br[^>]*>)+?|)</' + forcedRootBlockName + '>|<br>$', 'i').test(html);
   };
   var hasDraft = function (editor) {
-    var time = parseInt(LocalStorage.getItem($_gc7s768cjd08mcag.getAutoSavePrefix(editor) + 'time'), 10) || 0;
-    if (new Date().getTime() - time > $_gc7s768cjd08mcag.getAutoSaveRetention(editor)) {
+    var time = parseInt(LocalStorage.getItem($_3xick18cjd24rip8.getAutoSavePrefix(editor) + 'time'), 10) || 0;
+    if (new Date().getTime() - time > $_3xick18cjd24rip8.getAutoSaveRetention(editor)) {
       removeDraft(editor, false);
       return false;
     }
     return true;
   };
   var removeDraft = function (editor, fire) {
-    var prefix = $_gc7s768cjd08mcag.getAutoSavePrefix(editor);
+    var prefix = $_3xick18cjd24rip8.getAutoSavePrefix(editor);
     LocalStorage.removeItem(prefix + 'draft');
     LocalStorage.removeItem(prefix + 'time');
     if (fire !== false) {
-      $_flb3g8bjd08mcae.fireRemoveDraft(editor);
+      $_d88umc8bjd24rip6.fireRemoveDraft(editor);
     }
   };
   var storeDraft = function (editor) {
-    var prefix = $_gc7s768cjd08mcag.getAutoSavePrefix(editor);
+    var prefix = $_3xick18cjd24rip8.getAutoSavePrefix(editor);
     if (!isEmpty(editor) && editor.isDirty()) {
       LocalStorage.setItem(prefix + 'draft', editor.getContent({
         format: 'raw',
         no_events: true
       }));
       LocalStorage.setItem(prefix + 'time', new Date().getTime().toString());
-      $_flb3g8bjd08mcae.fireStoreDraft(editor);
+      $_d88umc8bjd24rip6.fireStoreDraft(editor);
     }
   };
   var restoreDraft = function (editor) {
-    var prefix = $_gc7s768cjd08mcag.getAutoSavePrefix(editor);
+    var prefix = $_3xick18cjd24rip8.getAutoSavePrefix(editor);
     if (hasDraft(editor)) {
       editor.setContent(LocalStorage.getItem(prefix + 'draft'), { format: 'raw' });
-      $_flb3g8bjd08mcae.fireRestoreDraft(editor);
+      $_d88umc8bjd24rip6.fireRestoreDraft(editor);
     }
   };
   var startStoreDraft = function (editor, started) {
-    var interval = $_gc7s768cjd08mcag.getAutoSaveInterval(editor);
+    var interval = $_3xick18cjd24rip8.getAutoSaveInterval(editor);
     if (!started.get()) {
       setInterval(function () {
         if (!editor.removed) {
@@ -136,7 +136,7 @@ var autosave = (function () {
     });
     editor.focus();
   };
-  var $_ew42ue88jd08mcab = {
+  var $_f512i488jd24rip2 = {
     isEmpty: isEmpty,
     hasDraft: hasDraft,
     removeDraft: removeDraft,
@@ -154,14 +154,14 @@ var autosave = (function () {
   };
   var get = function (editor) {
     return {
-      hasDraft: curry($_ew42ue88jd08mcab.hasDraft, editor),
-      storeDraft: curry($_ew42ue88jd08mcab.storeDraft, editor),
-      restoreDraft: curry($_ew42ue88jd08mcab.restoreDraft, editor),
-      removeDraft: curry($_ew42ue88jd08mcab.removeDraft, editor),
-      isEmpty: curry($_ew42ue88jd08mcab.isEmpty, editor)
+      hasDraft: curry($_f512i488jd24rip2.hasDraft, editor),
+      storeDraft: curry($_f512i488jd24rip2.storeDraft, editor),
+      restoreDraft: curry($_f512i488jd24rip2.restoreDraft, editor),
+      removeDraft: curry($_f512i488jd24rip2.removeDraft, editor),
+      isEmpty: curry($_f512i488jd24rip2.isEmpty, editor)
     };
   };
-  var $_ckkpar87jd08mca9 = { get: get };
+  var $_7c4u87jd24rios = { get: get };
 
   var EditorManager = tinymce.util.Tools.resolve('tinymce.EditorManager');
 
@@ -171,7 +171,7 @@ var autosave = (function () {
       if (editor.plugins.autosave) {
         editor.plugins.autosave.storeDraft();
       }
-      if (!msg && editor.isDirty() && $_gc7s768cjd08mcag.shouldAskBeforeUnload(editor)) {
+      if (!msg && editor.isDirty() && $_3xick18cjd24rip8.shouldAskBeforeUnload(editor)) {
         msg = editor.translate('You have unsaved changes are you sure you want to navigate away?');
       }
     });
@@ -180,42 +180,42 @@ var autosave = (function () {
   var setup = function (editor) {
     window.onbeforeunload = EditorManager._beforeUnloadHandler;
   };
-  var $_c56bdd8ejd08mcam = { setup: setup };
+  var $_7agbua8ejd24ripb = { setup: setup };
 
   var postRender = function (editor, started) {
     return function (e) {
       var ctrl = e.control;
-      ctrl.disabled(!$_ew42ue88jd08mcab.hasDraft(editor));
+      ctrl.disabled(!$_f512i488jd24rip2.hasDraft(editor));
       editor.on('StoreDraft RestoreDraft RemoveDraft', function () {
-        ctrl.disabled(!$_ew42ue88jd08mcab.hasDraft(editor));
+        ctrl.disabled(!$_f512i488jd24rip2.hasDraft(editor));
       });
-      $_ew42ue88jd08mcab.startStoreDraft(editor, started);
+      $_f512i488jd24rip2.startStoreDraft(editor, started);
     };
   };
   var register = function (editor, started) {
     editor.addButton('restoredraft', {
       title: 'Restore last draft',
       onclick: function () {
-        $_ew42ue88jd08mcab.restoreLastDraft(editor);
+        $_f512i488jd24rip2.restoreLastDraft(editor);
       },
       onPostRender: postRender(editor, started)
     });
     editor.addMenuItem('restoredraft', {
       text: 'Restore last draft',
       onclick: function () {
-        $_ew42ue88jd08mcab.restoreLastDraft(editor);
+        $_f512i488jd24rip2.restoreLastDraft(editor);
       },
       onPostRender: postRender(editor, started),
       context: 'file'
     });
   };
-  var $_awle4u8gjd08mcaq = { register: register };
+  var $_3wtrxm8gjd24ripe = { register: register };
 
   PluginManager.add('autosave', function (editor) {
     var started = Cell(false);
-    $_c56bdd8ejd08mcam.setup(editor);
-    $_awle4u8gjd08mcaq.register(editor, started);
-    return $_ckkpar87jd08mca9.get(editor);
+    $_7agbua8ejd24ripb.setup(editor);
+    $_3wtrxm8gjd24ripe.register(editor, started);
+    return $_7c4u87jd24rios.get(editor);
   });
   function Plugin () {
   }

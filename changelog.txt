@@ -1,3 +1,5 @@
+Version 4.7.6-tw1 (2018-01-30)
+    Fixed a bug where rotating an image did not update src, width and height atomically.
 Version 4.7.6 (2018-01-29)
     Fixed a bug in the jquery integration where it threw an error saying that "global is not defined".
     Fixed a bug where deleting a table cell whose previous sibling was set to contenteditable false would create a corrupted table.
